@@ -37,22 +37,6 @@ def Detect(file_path):
     predicted_class = int(res > 0.48)
     print("Predicted class:", predicted_class)
     print(predicted_class)
-    """image=Image.open(file_path)
-    image=image.resize((48,48))
-    image=numpy.expand_dims(image,axis=0)
-    image=np.array(image)
-    image=np.delete(image,0,1)
-    image=np.resize(image,(48,48,3))
-    print (image.shape)
-    sex_f=["Female","Male"]
-    image=np.array([image])/255
-    pred=model.predict(image)
-    age=int(np.round(pred[1][0]))
-    sex=int(np.round(pred[0][0]))
-    print("Predicted Age is "+ str(age))
-    print("Predicted Gender is "+sex_f[sex]) 
-    label1.configure(foreground="#011638",text=age)
-    label2.configure(foreground="#011638",text=sex_f[sex]) """
     sex_f=["Female","Male"]
     print("Predicted Gender is "+sex_f[predicted_class]) 
     label2.configure(foreground="#011638",text=sex_f[predicted_class]) 
@@ -80,26 +64,20 @@ def stop(file_path):
 
 
 # Definig Upload Image Function
-def upload_image():
+def upload_audio():
     try:
         file_path=filedialog.askopenfilename()
-       # uploaded=Image.open(file_path)
+
         librosa_audio_data,librosa_sample_rate=librosa.load(file_path)
-       # uploaded.thumbnail(((top.winfo_width()/2.25),(top.winfo_height()/2.25)))
-       # im=ImageTk.PhotoImage(uploaded)
-       # Audio(data=librosa_audio_dataFemale,rate=librosa_sample_rateFemale)
+
         Audio(data=librosa_audio_data,rate=librosa_sample_rate)
-      #  sign_image.configure(image=im)
-       # sign_image.image=im
-       # label1.configure(text='')
-      #  label2.configure(text='')
         show_Detect_button(file_path)
         show_play(file_path)
         show_stop(file_path)
     except:
         pass
 
-upload=Button(top,text="Upload Audio",command=upload_image,padx=10,pady=5)
+upload=Button(top,text="Upload Audio",command=upload_audio,padx=10,pady=5)
 upload.configure(background="#364156",foreground='white',font=('arial',10,'bold'))
 upload.pack(side='bottom',pady=50)
 
